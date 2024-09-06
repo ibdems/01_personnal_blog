@@ -1,0 +1,64 @@
+{% extends "base.html" %} 
+{% block title %}Liste des commentaires{% endblock %} 
+{% block content %}
+<h5>Liste des commentaires non approuvés</h5>
+<table class="table table-bordered table-striped table-compressed text-center">
+    <tr>
+        <th>#</th>
+        <th>Article</th>
+        <th>Commentateur</th>
+        <th>Commentaire</th>
+        <th>Date</th>
+        <th>Action</th>
+    </tr>
+    <tbody>
+        {% for commentaire in commentaires %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ commentaire.article.title }}</td>
+            <td>{{ commentaire.name }}</td>
+            <td>{{ commentaire.comment }}</td>
+            <td>{{ commentaire.created_at }}</td>
+            <td>
+                <form action="{% url 'commentaire_approuve' commentaire.id %}" method="post" style="display: inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-success btn-sm"
+                        onclick="return confirm('Êtes-vous sûr de vouloir approuver ce commentaire ?');">
+                        Approuver
+                    </button>
+                </form>
+                <form action="{% url 'commentaire_delete' commentaire.pk %}" method="post" style="display: inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-danger btn-sm"
+                        onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet commentaire ?');">
+                        Supprimer
+                    </button>
+                </form>
+
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4">Aucun commentaire à approuver.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    <div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} sur {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">Suivant</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">Precedent &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+</table>
+{% endblock %}

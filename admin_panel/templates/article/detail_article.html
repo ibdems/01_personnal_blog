@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}Détail de l'Article{% endblock %}
+{% block title2 %}Détail{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h3 class="mb-4">Détails de l'article</h3>
+    <div class="row">
+        <div class="col-md-5">
+            {% if article.image %}
+                <img src="{{ article.image.url }}" class="img-fluid rounded" alt="{{ article.title }}">
+            {% else %}
+                <img src="https://via.placeholder.com/500x300" class="img-fluid rounded" alt="Image par défaut">
+            {% endif %}
+            <p class="text-end mt-2"><strong>Publié le: </strong>{{ article.date_published }}</p>
+        </div>
+        <div class="col-md-7">
+            <h2>{{ article.title }}</h2>
+            <h4 class="text-muted">{{ article.summary }}</h4>
+            <p class="text-justify">{{ article.content }}</p>
+            
+            <p><strong>Catégorie:</strong> {{ article.category.name }}</p>
+
+            {% if article.tag.all %}
+                <p><strong>Tags:</strong>
+                {% for tag in article.tag.all %}
+                    <span class="badge bg-secondary">{{ tag.name }}</span>
+                {% endfor %}
+                </p>
+            {% else %}
+                <p><strong>Tags:</strong> Aucun tag associé</p>
+            {% endif %}
+
+            <div class="mt-3">
+                <a href="{% url 'article_update' article.pk %}" class="btn btn-outline-dark btn-md me-2">Modifier</a>
+                <form action="{% url 'article_delete' article.pk %}" method="post" style="display: inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-danger btn-md"
+                        onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet article ?');">
+                        Supprimer
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

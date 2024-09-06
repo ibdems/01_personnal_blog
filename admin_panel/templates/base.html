@@ -1,0 +1,221 @@
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>{% block title %}Blog{% endblock %}</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css"
+      rel="stylesheet"
+    />
+    <link href="{% static 'admin_panel/css/styles.css' %}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script
+      src="https://use.fontawesome.com/releases/v6.3.0/js/all.js"
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      
+
+      /* Couleur de fond pour la sidebar */
+      .sb-sidenav {
+        background-color: #212529;
+        /* Couleur de fond plus sombre pour la sidebar */
+      }
+      /* Effet pour les liens de la sidebar */
+      .sb-sidenav-menu .nav-link {
+        transition: background-color 0.3s, color 0.3s !important; /* Animation pour les effets de survol */
+      }
+
+      .sb-sidenav-menu .nav-link:hover {
+        background-color: #495057 !important; /* Couleur de fond lors du survol */
+        color: #ffffff !important; /* Couleur du texte lors du survol */
+      }
+
+      /* Effet pour les icônes des liens de la sidebar */
+      .sb-sidenav-menu .nav-link .sb-nav-link-icon {
+        transition: color 0.3s !important; /* Animation pour les effets de survol sur les icônes */
+      }
+
+      .sb-sidenav-menu .nav-link:hover .sb-nav-link-icon {
+        color: #ffffff !important; /* Couleur des icônes lors du survol */
+      }
+
+      /* Effet pour les boutons dans la navbar */
+      .navbar-nav .nav-link {
+        transition: background-color 0.3s, color 0.3s !important;
+      }
+
+      .navbar-nav .nav-link:hover {
+        background-color: #495057 !important;
+        color: #ffffff !important;
+      }
+      /* Style pour les boutons de la navbar */
+      .btn {
+        border-radius: 5px !important; /* Coins arrondis */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important; /* Ombre pour un effet de profondeur */
+      }
+
+      .btn:hover {
+        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2) !important; /* Ombre plus prononcée lors du survol */
+      }
+    </style>
+  </head>
+
+  <body class="sb-nav-fixed">
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+      <!-- Navbar Brand -->
+      <h3 class="text-light mx-1">
+        1000<span class="text-success">TechLeaders</span>
+      </h3>
+      <!-- Sidebar Toggle -->
+      <button class="btn btn-link fs-2 order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!">
+        <i class="fas fa-bars"></i>
+      </button>
+
+      <!-- Welcome Message -->
+      {% if user.is_authenticated %}
+        <div class="ms-auto text-light d-flex align-items-center me-2">
+          <span class="me-2">Bienvenue, {{ user.username|title }}!</span>
+          <a class="btn btn-outline-light" href="{% url 'signout' %}">Se déconnecter</a>
+        </div>
+      {% endif %}
+    </nav>
+    <div id="layoutSidenav">
+      <div id="layoutSidenav_nav">
+        <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+          <div class="sb-sidenav-menu">
+            <div class="nav">
+              <div class="text-center fs-4 fw-bold">My Blog</div>
+              <a class="nav-link" href="{% url 'dashboard' %}">
+                <div class="sb-nav-link-icon">
+                  <i class="fas fs-4 fa-tachometer-alt"></i>
+                </div>
+                Tableau de bord
+              </a> 
+              {% comment %} Categorie {% endcomment %}
+              <a
+                class="nav-link collapsed"
+                href="#"
+                data-bs-toggle="collapse"
+                data-bs-target="#categorie"
+                aria-expanded="false"
+                aria-controls="categorie"
+              >
+                <div class="sb-nav-link-icon">
+                  <i class="bi bi-bookmarks-fill fs-4"></i>
+                </div>
+                Categorie
+                <div class="sb-sidenav-collapse-arrow">
+                  <i class="fas fa-angle-down"></i>
+                </div>
+              </a>
+              <div
+                class="collapse"
+                id="categorie"
+                aria-labelledby="headingOne"
+                data-bs-parent="#sidenavAccordion"
+              >
+                <nav class="sb-sidenav-menu-nested nav">
+                  <a class="nav-link" href="{% url 'category_list' %}"><i class="bi fs-5 bi-list-ol"></i>Liste</a>
+                  <a class="nav-link" href="{% url 'category_create' %}"
+                    > <i class="bi fs-5 bi-plus"></i>Ajouter</a
+                  >
+                </nav>
+              </div>
+              {% comment %} Article {% endcomment %}
+              <a
+                class="nav-link collapsed"
+                href="#"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapseLayouts"
+                aria-expanded="false"
+                aria-controls="collapseLayouts"
+              >
+                <div class="sb-nav-link-icon">
+                  <i class="bi fs-4 bi-substack"></i>
+                </div>
+                Articles
+                <div class="sb-sidenav-collapse-arrow">
+                  <i class="fas fa-angle-down"></i>
+                </div>
+              </a>
+              <div
+                class="collapse"
+                id="collapseLayouts"
+                aria-labelledby="headingOne"
+                data-bs-parent="#sidenavAccordion"
+              >
+                <nav class="sb-sidenav-menu-nested nav">
+                  <a class="nav-link" href="{% url 'article_list' %}"><i class="bi fs-5 bi-list-ol"></i> Liste</a>
+                  <a class="nav-link" href="{% url 'article_create' %}"
+                    ><i class="bi fs-5 bi-plus"></i>Ajouter</a
+                  >
+                </nav>
+              </div>
+              {% comment %} Commentaire {% endcomment %}
+              <a class="nav-link" href="{% url 'commentaire_list' %}">
+                <div class="sb-nav-link-icon">
+                  <i class="bi fs-4 bi-chat-right-quote-fill"></i>
+                </div>
+                Commentaires
+              </a>
+              {% comment %} Messages {% endcomment %}
+              <a class="nav-link" href="{% url 'message_list' %}">
+                <div class="sb-nav-link-icon">
+                  <i class="bi fs-4 bi-chat-square-dots-fill"></i>
+                </div>
+                Messages
+              </a>
+              {% comment %} Profil {% endcomment %}
+              <a class="nav-link" href="{% url 'profile' %}">
+                <div class="sb-nav-link-icon">
+                  <i class="bi fs-4 bi-person-fill"></i>
+                </div>
+                Profile
+              </a>
+              {% comment %} Deconnexion {% endcomment %}
+
+              <a class="nav-link" href="{% url 'signout' %}">
+                <div class="sb-nav-link-icon">
+                  <i class="bi fs-4 bi-arrow-left-square-fill"></i>
+                </div>
+                Deconnexions
+              </a>
+            </div>
+          </div>
+        </nav>
+      </div>
+      <div id="layoutSidenav_content">
+        <main>
+          <div class="container-fluid px-4">
+            <h3 class="mt-2">
+              {% block title2 %}Tableau de bord{% endblock %}
+            </h3>
+            {% block content %}{% endblock %}
+          </div>
+        </main>
+        <footer class="py-4 bg-light mt-auto">
+          <div class="container-fluid px-4">
+            <div
+              class="d-flex align-items-center justify-content-between small"
+            >
+              <div class="text-muted">Copyright © 1000TechLeaders 2024</div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="{% static 'admin_panel/js/scripts.js' %}"></script>
+  </body>
+</html>

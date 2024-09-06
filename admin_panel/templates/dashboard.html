@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Tablau de bord{% endblock %}
+{% block title2 %}Tablau de bord{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card text-black bg-light border-secondary mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Articles</h5>
+                    <p class="card-text fs-3">{{ number_article }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-black bg-light border-secondary mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Com non approuvés</h5>
+                    <p class="card-text fs-3">{{ number_comment_dont_approved }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-black bg-light border-secondary mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Messages</h5>
+                    <p class="card-text fs-3">{{ number_message }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-black bg-light border-secondary mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Catégories</h5>
+                    <p class="card-text fs-3">{{ number_category }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

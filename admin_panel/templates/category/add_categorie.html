@@ -1,0 +1,25 @@
+
+{% extends "base.html" %}
+
+{% block title %}Gestion des categories{% endblock %}
+{% block title2 %}Gestion des categories{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="card mt-4 mx-5">
+    
+    <div class="card-body">
+    <form action="" method="post">
+      {% csrf_token %}
+
+      {{ form.as_p }}
+      
+      
+      <input type="submit" class="btn btn-success" value="Enregistrer" />
+      <input type="reset" class="btn btn-secondary" value="Annuler" />
+    </form>
+  </div>
+  </div>
+  
+</div>
+{% endblock %}

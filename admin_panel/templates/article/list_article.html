@@ -1,0 +1,59 @@
+{% extends "base.html" %} 
+{% block title %}Liste des articles{% endblock %} 
+{% block content %}
+<h4>Listes des articles</h4>
+<table class="table table-bordered table-striped table-compressed text-center">
+    <tr>
+        <th>#</th>
+        <th>Categorie</th>
+        <th>Image</th>
+        <th>Titre</th>
+        <th>Resume</th>
+        <th>Date de publication</th>
+        <th>Detail</th>
+    </tr>
+    <tbody>
+        {% for article in articles %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ article.category.name }}</td>
+            <td>
+                {% if article.image %}
+                <img src="{{ article.image.url }}" class="img-thumbnail" width="70" height="50" />
+                {% else %}
+                <img src="" alt="Pas d'image" />
+                {% endif %}
+            </td>
+            <td>{{ article.title }}</td>
+            <td>{{ article.summary }}</td>
+            <td>{{ article.date_published }}</td>
+            <td>
+                <a href="{% url 'article_details' article.pk %}" class="btn btn-outline-dark btn-md">Detail</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4">Aucune catégorie trouvée.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    <div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} sur {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+</table>
+<a href="{% url 'article_create' %}" class="btn btn-outline-dark">Ajouter un nouveau article</a>
+{% endblock %}

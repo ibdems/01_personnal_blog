@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Liste des messages{% endblock %}
+{% block content %}
+<h5>Liste des messages</h5>
+<div class="accordion accordion-flush" id="accordionFlushExample">
+    {% for message in messages %}
+    <div class="accordion-item border-2">
+        <h2 class="accordion-header">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#message{{message.id}}" aria-expanded="false" aria-controls="message{{message.id}}">
+            <div class="row d-flex w-100 justify-content-between align-items-center">
+                <div class="col-sm-7">{{message.subject}}</div>
+                <div class="col-sm-5 text-end"> <strong>Reçu le:</strong> {{message.created_at|date:"d/m/Y H:i:s"}}</div>
+            </div>
+        </button>
+        </h2>
+        <div id="message{{message.id}}" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+            <h5 class="ms-3">De: {{message.name}}</h5>
+            <div class="accordion-body" style="margin-top: -20px;">{{message.content}}</div>
+            <!-- <button class="btn btn-outline-success" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">Repondre</button> -->
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
