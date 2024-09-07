@@ -20,6 +20,8 @@
       src="https://use.fontawesome.com/releases/v6.3.0/js/all.js"
       crossorigin="anonymous"
     ></script>
+    <script src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
+    <script src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
     <style>
       
 
@@ -81,9 +83,8 @@
 
       <!-- Welcome Message -->
       {% if user.is_authenticated %}
-        <div class="ms-auto text-light d-flex align-items-center me-2">
+        <div class="ms-auto text-light d-flex">
           <span class="me-2">Bienvenue, {{ user.username|title }}!</span>
-          <a class="btn btn-outline-light" href="{% url 'signout' %}">Se déconnecter</a>
         </div>
       {% endif %}
     </nav>
@@ -93,6 +94,12 @@
           <div class="sb-sidenav-menu">
             <div class="nav">
               <div class="text-center fs-4 fw-bold">My Blog</div>
+              <a class="nav-link" href="{% url 'index' %}">
+                <div class="sb-nav-link-icon">
+                  <i class="bi fs-4 bi-house-fill"></i>
+                </div>
+                Accueil
+              </a>
               <a class="nav-link" href="{% url 'dashboard' %}">
                 <div class="sb-nav-link-icon">
                   <i class="fas fs-4 fa-tachometer-alt"></i>

@@ -32,7 +32,7 @@
                                     <form method="POST">
                                         {% csrf_token %}
                                         <div class="form-floating mb-3">
-                                            <input class="form-control" id="inputEmail" type="text" name="username"
+                                            <input class="form-control {% if form.username.errors %}is-invalid{% endif %}" id="inputEmail" type="text" name="username"
                                                  />
                                             <label for="inputEmail">Nom d'utilisateur</label>
                                             {% if form.username.errors %}
@@ -42,7 +42,7 @@
                                             {% endif %}
                                         </div>
                                         <div class="form-floating mb-3">
-                                            <input class="form-control" id="inputPassword" type="password" name="password"
+                                            <input class="form-control {% if form.password.errors %}is-invalid{% endif %}" id="inputPassword" type="password" name="password"
                                                 placeholder="Password" />
                                             <label for="inputPassword">Mot de passe</label>
                                             {% if form.password.errors %}

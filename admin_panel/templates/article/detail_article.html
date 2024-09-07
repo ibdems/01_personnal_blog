@@ -18,8 +18,7 @@
         <div class="col-md-7">
             <h2>{{ article.title }}</h2>
             <h4 class="text-muted">{{ article.summary }}</h4>
-            <p class="text-justify">{{ article.content }}</p>
-            
+            <p class="text-justify">{{ article.content|safe }}</p>
             <p><strong>Catégorie:</strong> {{ article.category.name }}</p>
 
             {% if article.tag.all %}

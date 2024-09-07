@@ -1,6 +1,7 @@
 from django.utils import timezone
 from django.db import models
 from django.contrib.auth.models import User
+from ckeditor.fields import RichTextField
 
 class Profile(models.Model):
     choice_role = [
@@ -19,7 +20,6 @@ class Profile(models.Model):
 
 
 class Category(models.Model):
-    user = models.ForeignKey(User, related_name='categorie',blank=True, null=True, default=1, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
     description = models.TextField(blank=True, null=True)
 
@@ -36,7 +36,7 @@ class Article(models.Model):
     user = models.ForeignKey(User, related_name='articles',blank=True, null=True, default=1, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     summary = models.CharField(max_length=200)
-    content = models.TextField()
+    content = RichTextField()
     date_published = models.DateTimeField(blank=True, default=timezone.now)
     image = models.ImageField(upload_to='images_article/', max_length=255, blank=True, null=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)

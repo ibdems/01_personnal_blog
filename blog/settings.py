@@ -39,7 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'article',
-    'admin_panel'
+    'admin_panel',
+    'ckeditor',
+    'ckeditor_uploader',
 ]
 
 MIDDLEWARE = [
@@ -129,3 +131,14 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 LOGIN_REDIRECT_URL = 'dashboard'
 LOGIN_URL = 'signin'
+CKEDITOR_UPLOAD_PATH = "uploads/"
+
+# Optionnel : configurer CKEditor avec des options spécifiques
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'height': 350,
+        'width': '100%',
+        'toolbarCanCollapse': True,
+    },
+}

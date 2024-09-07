@@ -170,7 +170,7 @@ def signin (request):
                 return redirect(reverse('signin'))
         else:
             print(form.errors)
-            return redirect(reverse('signin'))
+            return render(request, 'login.html', {'form': form})
     else:
         form = LoginForm()
     return render(request, 'login.html', {'form': form})
@@ -195,7 +195,7 @@ def registration (request):
             return redirect(reverse('signin'))
         else :
             print(form.errors)
-            return redirect(reverse('registration'))
+            return render(request, 'register.html', {'form': form})
     else:
         form = RegistrationForm()
      

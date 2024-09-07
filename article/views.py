@@ -73,6 +73,22 @@ class ContactCreateView(CreateView):
     def form_invalid(self, form):
         messages.error(self.request, 'Votre message n\'a pas pu etre envoyer')
         return super().form_invalid(form)
+
+
+class ListArticleCategory(ListView):
+    model = Article
+    template_name = 'article/category.html'
+    context_object_name = 'articles'
+
+    def get_queryset(self) -> QuerySet:
+        queryset = super().get_queryset()
+        category_id = self.kwargs.get('id')
+        return queryset.filter(category=category_id)
     
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        category_id = self.kwargs.get('id')
+        context['category'] = Category.objects.get(id=category_id)
+        return context
     
     

@@ -4,4 +4,5 @@ urlpatterns = [
     path('', IndexView.as_view(), name='index'),
     path('detail_article/<int:pk>', ArticleDetailsView.as_view(), name='detail_article_public'),
     path('contact/', ContactCreateView.as_view(), name='contact'),
+    path('<int:id>/articles-category', ListArticleCategory.as_view(), name='article_category'),
 ]

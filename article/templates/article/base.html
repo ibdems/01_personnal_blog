@@ -1,154 +1,135 @@
 {% load static %}
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>{% block title %}Mon Blog{% endblock %}</title>
-    <meta name="description" content="" />
-    <meta name="keywords" content="" />
 
-    <!-- Favicons -->
-    <link href="{% static 'article/img/favicon.png' %}" rel="icon" />
-    <link
-      href="{% static 'article/img/apple-touch-icon.png' %}"
-      rel="apple-touch-icon"
-    />
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>{% block title %}Mon Blog{% endblock %}</title>
+  <meta name="description" content="" />
+  <meta name="keywords" content="" />
 
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com" rel="preconnect" />
-    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin="" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&amp;family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700;1,800&amp;display=swap"
-      rel="stylesheet"
-    />
+  <!-- Favicons -->
+  <link href="{% static 'article/img/favicon.png' %}" rel="icon" />
+  <link href="{% static 'article/img/apple-touch-icon.png' %}" rel="apple-touch-icon" />
 
-    <link
-      href="{% static 'article/vendor/bootstrap/css/bootstrap.min.css' %}"
-      rel="stylesheet"
-    />
-    <link
-      href="{% static 'article/vendor/bootstrap-icons/bootstrap-icons.css' %}"
-      rel="stylesheet"
-    />
-    <link href="{% static 'article/vendor/aos/aos.css' %}" rel="stylesheet" />
-    <link
-      href="{% static 'article/vendor/swiper/swiper-bundle.min.css' %}"
-      rel="stylesheet"
-    />
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin="" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&amp;family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700;1,800&amp;display=swap"
+    rel="stylesheet" />
 
-    <link href="{% static 'article/css/main.css' %}" rel="stylesheet" />
+  <link href="{% static 'article/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" />
+  <link href="{% static 'article/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet" />
+  <link href="{% static 'article/vendor/aos/aos.css' %}" rel="stylesheet" />
+  <link href="{% static 'article/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet" />
 
-  </head>
+  <link href="{% static 'article/css/main.css' %}" rel="stylesheet" />
 
-  <body class="index-page">
-    <header id="header" class="header d-flex align-items-center sticky-top">
-      <div
-        class="container position-relative d-flex align-items-center justify-content-between"
-      >
-        <a
-          href=""
-          class="logo d-flex align-items-center me-auto me-xl-0"
-        >
-          <h1 class="px-1 sitename">1000<span class='text-success'>TechLeaders</span> </h1>
-        </a>
+</head>
 
-        <nav id="navmenu" class="navmenu">
-          <ul>
-            <li><a href="{% url "index" %}" class="active">Accueil</a></li>
-            <li><a href="">A propos</a></li>
-            
-            <li class="dropdown">
-              <a href="#"
-                ><span>Categories</span>
-                <i class="bi bi-chevron-down toggle-dropdown"></i
-              ></a>
-              <ul>
-                {% for category, articles in categorized_articles.items  %}
-                  <li><a href="">{{ category.name }}</a></li>
-                {% endfor %}
-                
-  
-              </ul>
-            </li>
-            <li><a href="{% url "contact" %}">Contact</a></li>
-          </ul>
-          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-        </nav>
+<body class="index-page">
+  <header id="header" class="header d-flex align-items-center sticky-top">
+    <div class="container position-relative d-flex align-items-center justify-content-between">
+      <a href="" class="logo d-flex align-items-center me-auto me-xl-0">
+        <h1 class="px-1 sitename">1000<span class='text-success'>TechLeaders</span> </h1>
+      </a>
 
-        {% if not user.is_authenticated %}
-          <div>
-            <a href="{% url 'signin' %}" class="btn btn-outline-dark">Se Connecter</a>
-            <a href="{% url 'registration' %}" class="btn btn-outline-dark">S'inscrire</a>
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="{% url 'index' %}" class="active">Accueil</a></li>
+
+          <li class="dropdown">
+            <a href="#"><span>Categories</span>
+              <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+            <ul>
+              {% for category, articles in categorized_articles.items %}
+              <li><a href="{% url 'article_category' category.id %}">{{ category.name }}</a></li>
+              {% endfor %}
+
+
+            </ul>
+          </li>
+          <li><a href="{% url 'contact' %}">Contact</a></li>
+          {% if not user.is_authenticated %}
+
+          <li><a href="{% url 'signin' %}" class="">Se Connecter</a></li>
+          <li><a href="{% url 'registration' %}" class="">S'inscrire</a></li>
+
+          {% else %}
+          <li><a class="" href="{% url 'dashboard' %}">Tableau de Bord</a></li>
+          <li>
+            <a class="" href="{% url 'signout' %}">Se déconnecter</a>
+          </li>
+
+          {% endif %}
+        </ul>
+
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+
+
+
+    </div>
+  </header>
+
+  <main class="main">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer id="footer" class="footer dark-background">
+    <div class="container footer-top">
+      <div class="row gy-4">
+        <div class="col-lg-4 col-md-6 footer-about">
+          <a href="" class="logo d-flex align-items-center">
+            <strong class="px-1 sitename">1000<span class='text-success'>TechLeaders</span> </strong>
+          </a>
+          <div class="footer-contact pt-3">
+            <p>NimbaHub</p>
+            <p>Conakry/Guinee</p>
+            <p class="mt-3">
+              <strong>Telephone:</strong> <span>63487783478</span>
+            </p>
+            <p><strong>Email:</strong> <span>info@example.com</span></p>
           </div>
-        {% else %}
-        <div>
-          <a class="btn btn-outline-dark" href="{% url 'signout' %}">Se déconnecter</a>
-        </div>
-        {% endif %}
-
-      </div>
-    </header>
-
-    <main class="main">
-        {% block content %}{% endblock %}
-    </main>
-
-    <footer id="footer" class="footer dark-background">
-      <div class="container footer-top">
-        <div class="row gy-4">
-          <div class="col-lg-4 col-md-6 footer-about">
-            <a href="" class="logo d-flex align-items-center">
-              <strong class="px-1 sitename">1000<span class='text-success'>TechLeaders</span> </strong>
-            </a>
-            <div class="footer-contact pt-3">
-              <p>NimbaHub</p>
-              <p>Conakry/Guinee</p>
-              <p class="mt-3">
-                <strong>Telephone:</strong> <span>63487783478</span>
-              </p>
-              <p><strong>Email:</strong> <span>info@example.com</span></p>
-            </div>
-            <div class="social-links d-flex mt-4">
-              <a href=""><i class="bi bi-twitter-x"></i></a>
-              <a href=""><i class="bi bi-facebook"></i></a>
-              <a href=""><i class="bi bi-instagram"></i></a>
-              <a href=""><i class="bi bi-linkedin"></i></a>
-            </div>
+          <div class="social-links d-flex mt-4">
+            <a href=""><i class="bi bi-twitter-x"></i></a>
+            <a href=""><i class="bi bi-facebook"></i></a>
+            <a href=""><i class="bi bi-instagram"></i></a>
+            <a href=""><i class="bi bi-linkedin"></i></a>
           </div>
-
         </div>
+
       </div>
+    </div>
 
-      <div class="container copyright text-center mt-4">
-        <p>
-          © <span>Copyright</span>
-          <strong class="px-1 sitename">1000<span class='text-success'>TechLeaders</span> </strong>
-          <span>Tout droit reserve</span>
-        </p>
-        <div class="credits">
+    <div class="container copyright text-center mt-4">
+      <p>
+        © <span>Copyright</span>
+        <strong class="px-1 sitename">1000<span class='text-success'>TechLeaders</span> </strong>
+        <span>Tout droit reserve</span>
+      </p>
+      <div class="credits">
 
-          Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-        </div>
+        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
       </div>
-    </footer>
+    </div>
+  </footer>
 
-    <!-- Scroll Top -->
-    <a
-      href="#"
-      id="scroll-top"
-      class="scroll-top d-flex align-items-center justify-content-center"
-      ><i class="bi bi-arrow-up-short"></i
-    ></a>
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
 
-    <!-- Preloader -->
-    <div id="preloader"></div>
+  <!-- Preloader -->
+  <div id="preloader"></div>
 
-    <!-- Vendor JS Files -->
-    <script src="{% static 'article/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-    <script src="{% static 'article/vendor/aos/aos.js' %}"></script>
-    <script src="{% static 'article/vendor/swiper/swiper-bundle.min.js' %}"></script>
+  <!-- Vendor JS Files -->
+  <script src="{% static 'article/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'article/vendor/aos/aos.js' %}"></script>
+  <script src="{% static 'article/vendor/swiper/swiper-bundle.min.js' %}"></script>
 
-    <!-- Main JS File -->
-    <script src="{% static 'article/js/main.js' %}"></script>
-  </body>
+  <!-- Main JS File -->
+  <script src="{% static 'article/js/main.js' %}"></script>
+</body>
+
 </html>

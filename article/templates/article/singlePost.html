@@ -40,15 +40,15 @@
 
                 <div class="meta-top">
                   <ul>
-                    <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="blog-details.html">John Doe</a></li>
-                    <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="blog-details.html"><time datetime="2020-01-01">Jan 1, 2022</time></a></li>
+                    <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="blog-details.html">{{article.user.first_name}}{{article.user.last_name}}</a></li>
+                   
                     <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="blog-details.html">{{ article.comment_set.count }} Commentaires</a></li>
                   </ul>
                 </div><!-- End meta top -->
 
                 <div class="content">
                   <p>
-                    {{ article.content }}
+                    {{ article.content|safe }}
                   </p>
 
                 </div><!-- End post content -->
@@ -138,7 +138,10 @@
 
               <div class="d-flex flex-column align-items-center">
                 <div class="d-flex align-items-center w-100">
-                  <img src="assets/img/blog/blog-author.jpg" class="rounded-circle flex-shrink-0" alt="">
+                  {% if article.user.profile.photo %}
+                    <img src="{{ article.user.profile.photo.url }}" class="rounded flex-shrink-0" alt="">
+                  {% endif %}
+                  
                   <div>
                     <h4>{{article.user.first_name|title}} {{article.user.last_name|title}}</h4>
                     <div class="social-links">
@@ -157,23 +160,6 @@
               </div>
 
             </div><!--/Blog Author Widget -->
-
-            
-
-            <!-- Recent Posts Widget -->
-            <div class="recent-posts-widget widget-item">
-
-              <h3 class="widget-title">Posts Recent</h3>
-
-              <div class="post-item">
-                <img src="assets/img/blog/blog-recent-1.jpg" alt="" class="flex-shrink-0">
-                <div>
-                  <h4><a href="blog-details.html">Nihil blanditiis at in nihil autem</a></h4>
-                  <time datetime="2020-01-01">Jan 1, 2020</time>
-                </div>
-              </div><!-- End recent post item-->
-
-            </div><!--/Recent Posts Widget -->
 
             <!-- Tags Widget -->
             <div class="tags-widget widget-item">
