@@ -20,7 +20,7 @@ class DashboardView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['number_article'] = Article.objects.filter(user = self.request.user).count()
-        context['number_comment_dont_approved'] = Comment.objects.filter(is_approved=False).count()
+        context['number_comment_dont_approved'] = Comment.objects.filter(is_approved=False, article__user = self.request.user).count()
         context['number_message'] = Message.objects.all().count()
         context['number_category'] = Category.objects.all().count()
         return context
@@ -51,11 +51,15 @@ class ArticleListView(LoginRequiredMixin, ListView):
     model = Article
     template_name = 'article/list_article.html'
     context_object_name = 'articles'
-    paginate_by = 10
+    paginate_by = 5
 
     def get_ordering(self) -> Sequence[str]:
         response = super().get_ordering()
         return ['-date_published']
+    
+    def get_queryset(self) -> QuerySet:
+        queryset = super().get_queryset()
+        return queryset.filter(user = self.request.user)
 
 class ArticleDetailsView(LoginRequiredMixin, DetailView):
     model = Article
@@ -120,7 +124,7 @@ class CommentaireListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        return queryset.filter(is_approved=False)
+        return queryset.filter(is_approved=False, article__user = self.request.user)
     
     def get_ordering(self) -> Sequence[str]:
         return ['-created_at']
