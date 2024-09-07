@@ -33,7 +33,7 @@ class Tag(models.Model):
         return self.name
 
 class Article(models.Model):
-    user = models.ForeignKey(User, related_name='articles',blank=True, null=True, default=1, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, blank=True, null=True, default=1, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     summary = models.CharField(max_length=200)
     content = RichTextField()

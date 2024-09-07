@@ -90,19 +90,22 @@ class ArticleCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('article_list')
 
     def form_valid(self, form):
+        # Associer l'utilisateur connecté à l'article
+        form.instance.user = self.request.user
         response = super().form_valid(form)
+        
+        # Ajout de tags (optionnel) après la création de l'article
+        tags = form.cleaned_data.get('new_tags')
+        if tags:
+            self.handle_tags(tags)
 
-        tags = form.instance.tag.all()
-        new_tags = form.cleaned_data['new_tags']
-
-        if new_tags:
-            tag_names = [tag.strip() for tag in new_tags.split(',')]
-            for tag_name in tag_names:
-                tag, created = Tag.objects.get_or_create(name=tag_name)
-                tags |= Tag.objects.filter(name=tag_name)
-
-        self.object.tag.set(tags)
         return response
+
+    def handle_tags(self, tags):
+        tag_names = [tag.strip() for tag in tags.split(',')]
+        for tag_name in tag_names:
+            tag, created = Tag.objects.get_or_create(name=tag_name)
+            self.object.tag.add(tag)
 
 class ArticleUpdateView(LoginRequiredMixin, UpdateView):
     model = Article

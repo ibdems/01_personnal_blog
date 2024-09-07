@@ -2,6 +2,13 @@
 {% block title %}Liste des messages{% endblock %}
 {% block content %}
 <h5>Liste des messages</h5>
+{% if messages %}
+                <div class="alert alert-success" role="alert">
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                </div>
+            {% endif %}
 <div class="accordion accordion-flush" id="accordionFlushExample">
     {% for message in messages %}
     <div class="accordion-item border-2">

@@ -33,7 +33,11 @@
               <article class="article">
 
                 <div class="post-img">
+                  {% if article.image %}
                   <img src="{{ article.image.url }}" alt="" class="img-fluid">
+                  {% else %}
+                  <img src="https://via.placeholder.com/300*500" alt="" class="img-fluid">
+                  {% endif %}
                 </div>
 
                 <h2 class="title">{{ article.title }}</h2>
