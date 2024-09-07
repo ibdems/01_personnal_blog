@@ -177,7 +177,7 @@ def signin (request):
 
 def signout(request):
     logout(request)
-    return redirect(reverse('signin'))
+    return redirect(reverse('index'))
 
 def registration (request):
     if request.method == 'POST':
