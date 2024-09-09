@@ -22,6 +22,16 @@
                 </div>
             </div>
         </div>
+        
+        <div class="col-md-3">
+            <div class="card text-black bg-light border-secondary mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Catégories</h5>
+                    <p class="card-text fs-3">{{ number_category }}</p>
+                </div>
+            </div>
+        </div>
+        {% if user.profile.role == 'Admin' %}
         <div class="col-md-3">
             <div class="card text-black bg-light border-secondary mb-3">
                 <div class="card-body">
@@ -33,12 +43,37 @@
         <div class="col-md-3">
             <div class="card text-black bg-light border-secondary mb-3">
                 <div class="card-body">
-                    <h5 class="card-title">Catégories</h5>
-                    <p class="card-text fs-3">{{ number_category }}</p>
+                    <h5 class="card-title">Utilisateurs</h5>
+                    <p class="card-text fs-3">{{ number_user }}</p>
                 </div>
             </div>
         </div>
+        {% endif %}
     </div>
+    {% if user.profile.role == 'Admin' %}
+        <table class="table table-bordered table-striped table-compressed">
+            <thead>
+                <tr>
+                <th>#</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Username</th>
+                <th>Nbre Article</th>
+                </tr>
+            </tr>
+            </thead>
+            {% for user in users %}
+              <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{user.first_name}}</td>
+                <td>{{user.last_name}}</td>
+                <td>{{user.username}}</td>
+                <td>{{user.article_set.count}}</td>
+              </tr>
+            {% endfor %}
+
+        </table>
+    {% endif %}
 </div>
 
 {% endblock %}

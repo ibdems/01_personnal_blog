@@ -23,6 +23,8 @@ class DashboardView(LoginRequiredMixin, TemplateView):
         context['number_comment_dont_approved'] = Comment.objects.filter(is_approved=False, article__user = self.request.user).count()
         context['number_message'] = Message.objects.all().count()
         context['number_category'] = Category.objects.all().count()
+        context['number_user'] = User.objects.all().count()
+        context['users'] = User.objects.all()
         return context
     
 
