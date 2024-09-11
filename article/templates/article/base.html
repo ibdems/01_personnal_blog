@@ -50,12 +50,10 @@
 
           <li><a href="{% url 'signin' %}" class="">Se Connecter</a></li>
           <li><a href="{% url 'registration' %}" class="">S'inscrire</a></li>
+          <li><a class="" href="http://127.0.0.1:8000/dems/">Administration</a></li>
+          <li>
 
           {% else %}
-          {% if user.is_staff %}
-            <li><a class="" href="http://127.0.0.1:8000/dems/">Administration</a></li>
-            <li>
-          {% endif %}
           <li><a class="" href="{% url 'dashboard' %}">Tableau de Bord</a></li>
           <li>
             <a class="" href="{% url 'signout' %}">Se déconnecter</a>
