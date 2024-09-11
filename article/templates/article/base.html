@@ -50,7 +50,6 @@
 
           <li><a href="{% url 'signin' %}" class="">Se Connecter</a></li>
           <li><a href="{% url 'registration' %}" class="">S'inscrire</a></li>
-          <li><a class="" href="http://127.0.0.1:8000/dems/">Administration</a></li>
           <li>
 
           {% else %}
@@ -60,6 +59,7 @@
           </li>
 
           {% endif %}
+          <li><a class="" href="{% url 'admin:index' %}">Administration</a></li>
         </ul>
 
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
