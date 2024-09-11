@@ -7,7 +7,7 @@ from blog import settings
 urlpatterns = [
     path('',include('article.urls')),
     path('panel/', include('admin_panel.urls')),
-    path('admin/', admin.site.urls),
+    path('dems/', admin.site.urls, name='administration'),
     path('ckeditor/', include('ckeditor_uploader.urls')),
 ]
 if settings.DEBUG:

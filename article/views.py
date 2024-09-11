@@ -2,7 +2,7 @@ from typing import Any
 from django.forms.models import BaseModelForm
 from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
-from django.views.generic import ListView, DetailView, TemplateView, CreateView 
+from django.views.generic import ListView, DetailView, CreateView 
 from django.contrib import messages
 from article.forms import CommentForm, MessageForm
 from article.models import Article, Category, Comment, Message

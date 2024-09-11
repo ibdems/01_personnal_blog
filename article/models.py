@@ -33,7 +33,7 @@ class Tag(models.Model):
         return self.name
 
 class Article(models.Model):
-    user = models.ForeignKey(User, blank=True, null=True, default=1, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     summary = models.CharField(max_length=200)
     content = RichTextField()
@@ -42,6 +42,9 @@ class Article(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     tag = models.ManyToManyField(Tag)
 
+    def __str__(self):
+        return self.title
+
 class Comment(models.Model):
     name = models.CharField(max_length=100)
     comment = models.TextField()
@@ -49,12 +52,18 @@ class Comment(models.Model):
     is_approved = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True, null=True)
 
+    def __str__(self):
+        return f"{self.name} {self.comment}"
+
 class Message(models.Model):
     name = models.CharField(max_length=50)
     email = models.EmailField()
     subject = models.CharField(max_length=100)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True, null=True,blank=True)
+
+    def __str__(self):
+        return f"{self.name} {self.subject}"
 
 
 
