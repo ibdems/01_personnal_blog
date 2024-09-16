@@ -1,0 +1,11 @@
+[settings]
+DEBUG=True
+SECRET_KEY=django-insecure--pm6@9k-22es8bsc8a18sj%%y^5kqenibk=t^yiqiv_f6(z7h@^
+DB_ENGINE=django.db.backends.mysql
+DB_NAME=dbblog
+DB_USER=root
+DB_PASSWORD=
+DB_HOST=localhost
+DB_PORT=3306
+
+
